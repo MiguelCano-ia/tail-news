@@ -1,7 +1,16 @@
 import { HomePageLayout } from "@/layout/HomePageLayout";
 import { RecentNews, RecentNewspaper, TrendingNews } from "./components";
+import { useGetArticlesByCategoryQuery } from "@/store/api/newsApi";
+import { useAppSelector } from "@/store";
 
 export const HomePage = () => {
+  const { category } = useAppSelector((state) => state.articles);
+  const { data: articles, isLoading } = useGetArticlesByCategoryQuery({
+    category,
+  });
+
+  console.log(articles);
+
   return (
     <HomePageLayout>
       {/* container */}

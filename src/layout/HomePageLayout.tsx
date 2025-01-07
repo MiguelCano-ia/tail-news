@@ -4,8 +4,8 @@ import { Navbar } from "@/shared/components/Navbar";
 const navigation = [
   { name: "Home", to: "" },
   { name: "Business", to: "business" },
-  { name: "Lifestyle", to: "lifestyle" },
-  { name: "Technology", to: "technology" },
+  { name: "Health", to: "health" },
+  { name: "Science", to: "science" },
   { name: "Sports", to: "sports" },
   { name: "Search", to: "search" },
 ];

@@ -1,14 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Result } from "../api/interfaces";
+import { newsApi, Result } from "../api";
 
 interface ArticleInitialState {
-  result: Result[];
   category: string;
+  latestNews: Result | null;
+  results: Result[];
 }
 
 const initialState: ArticleInitialState = {
-  result: [],
   category: "",
+  latestNews: null,
+  results: [],
 };
 
 export const articleSlice = createSlice({
@@ -18,7 +20,15 @@ export const articleSlice = createSlice({
     setCategory: (state, action: PayloadAction<string>) => {
       state.category = action.payload;
     },
-    setResults: (state, action) => {},
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      newsApi.endpoints.getArticlesByCategory.matchFulfilled,
+      (state, action: PayloadAction<Result[]>) => {
+        state.latestNews = action.payload[0];
+        state.results = action.payload.slice(1, 7);
+      }
+    );
   },
 });
-export const { setCategory, setResults } = articleSlice.actions;
+export const { setCategory } = articleSlice.actions;

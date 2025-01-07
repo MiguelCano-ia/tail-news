@@ -1,4 +1,4 @@
-import { Article } from "./interfaces";
+import { Article, Result } from "./";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const apiKey = import.meta.env.VITE_NEWS_API;
@@ -10,14 +10,15 @@ export const newsApi = createApi({
   }),
   endpoints: (builder) => {
     return {
-      getArticlesByCategory: builder.query<Article, { category: string }>({
+      // Tipado de la respuesta transformada
+      getArticlesByCategory: builder.query<Result[], { category: string }>({
         query: ({ category }) => ({
           url: "/article",
           method: "POST",
           body: {
             action: "getArticles",
             articlesPage: 1,
-            articlesCount: 10,
+            articlesCount: 9,
             articlesSortBy: "date",
             articlesSortByAsc: false,
             articlesArticleBodyLen: -1,
@@ -31,6 +32,10 @@ export const newsApi = createApi({
             apiKey: apiKey,
           },
         }),
+        // Tipado de la respuesta en crudo
+        transformResponse: (response: Article) => {
+          return response.articles.results;
+        },
       }),
     };
   },

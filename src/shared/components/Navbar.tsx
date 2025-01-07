@@ -6,9 +6,8 @@ import {
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { DarkModeToggle } from "./DarkModeToggle";
 import { NavLink, useNavigate, useParams } from "react-router";
+import { setCategory, useAppDispatch } from "@/store";
 import { useEffect, useMemo } from "react";
-import { useAppDispatch } from "@/store";
-import { setCategory } from "@/store/slices/articleSlice";
 
 interface NavigationRoutesProps {
   navigationRoutes: {

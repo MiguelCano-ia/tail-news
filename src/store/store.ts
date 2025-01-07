@@ -1,6 +1,5 @@
+import { articleSlice, newsApi } from "./";
 import { configureStore } from "@reduxjs/toolkit";
-import { newsApi } from "./api/newsApi";
-import { articleSlice } from "./slices/articleSlice";
 
 export const store = configureStore({
   reducer: {

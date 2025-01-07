@@ -1,3 +1,9 @@
+import { SearchPageLayout } from "@/layout/SearchPageLayout";
+
 export const SearchPage = () => {
-  return <div>SearchPage</div>;
+  return (
+    <SearchPageLayout>
+      <div>SearchPage</div>
+    </SearchPageLayout>
+  );
 };

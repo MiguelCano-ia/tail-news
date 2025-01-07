@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { newsApi, Result } from "../api";
+import { Result } from "../api";
 
 interface ArticleInitialState {
   category: string;
@@ -20,15 +20,10 @@ export const articleSlice = createSlice({
     setCategory: (state, action: PayloadAction<string>) => {
       state.category = action.payload;
     },
-  },
-  extraReducers: (builder) => {
-    builder.addMatcher(
-      newsApi.endpoints.getArticlesByCategory.matchFulfilled,
-      (state, action: PayloadAction<Result[]>) => {
-        state.latestNews = action.payload[0];
-        state.results = action.payload.slice(1, 7);
-      }
-    );
+    setNews: (state, action: PayloadAction<Result[]>) => {
+      state.latestNews = action.payload[0];
+      state.results = action.payload.slice(1, 7);
+    },
   },
 });
-export const { setCategory } = articleSlice.actions;
+export const { setCategory, setNews } = articleSlice.actions;

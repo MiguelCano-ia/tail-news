@@ -6,7 +6,9 @@ import {
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { DarkModeToggle } from "./DarkModeToggle";
 import { NavLink, useNavigate, useParams } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import { useAppDispatch } from "@/store";
+import { setCategory } from "@/store/slices/articleSlice";
 
 interface NavigationRoutesProps {
   navigationRoutes: {
@@ -16,16 +18,21 @@ interface NavigationRoutesProps {
 }
 
 export const Navbar = ({ navigationRoutes }: NavigationRoutesProps) => {
-  const { category } = useParams();
+  const { category = "Home" } = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const capitalizeFirst = useMemo(() => {
+    return category.charAt(0).toUpperCase() + category.slice(1);
+  }, [category]);
 
   useEffect(() => {
     const navigationNames = navigationRoutes.map((name) =>
       name.name.toLowerCase()
     );
-    if (category && !navigationNames.includes(category.toLowerCase()))
-      navigate("/");
-  }, [category, navigate, navigationRoutes]);
+    if (!navigationNames.includes(category.toLowerCase())) navigate("/");
+    dispatch(setCategory(capitalizeFirst));
+  }, [category]);
 
   const getLinkStyles = ({ isActive }: { isActive: boolean }) =>
     isActive

@@ -1,4 +1,6 @@
+import { Provider } from "react-redux";
 import { ReactNode } from "react";
+import { store } from "./store/store";
 import { ThemeProvider } from "./context";
 
 interface AppProps {
@@ -7,8 +9,10 @@ interface AppProps {
 
 export const App = ({ children }: AppProps) => {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      {children}
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        {children}
+      </ThemeProvider>
+    </Provider>
   );
 };

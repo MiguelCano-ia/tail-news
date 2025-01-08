@@ -39,13 +39,9 @@ export interface Result {
   sim: number;
   url: string;
   title: string;
-  body: string;
   source: Source;
   authors: Author[];
-  categories: Category[];
   image: null | string;
-  eventUri: null | string;
-  sentiment: number;
   wgt: number;
   relevance: number;
 }

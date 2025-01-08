@@ -9,6 +9,7 @@ export const RecentNews = () => {
       {results.map(({ uri, image, title, authors, dateTime }) => (
         <NewsCard
           key={uri}
+          uri={uri}
           image={image}
           title={title}
           authors={authors}

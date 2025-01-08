@@ -1,5 +1,9 @@
-import { Article, Result } from "./";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { Article, ArticleDetails, Info, Result } from "./";
+import {
+  createApi,
+  fetchBaseQuery,
+  FetchBaseQueryMeta,
+} from "@reduxjs/toolkit/query/react";
 
 const apiKey = import.meta.env.VITE_NEWS_API;
 
@@ -13,20 +17,22 @@ export const newsApi = createApi({
       // Tipado de la respuesta transformada
       getArticlesByCategory: builder.query<
         Result[],
-        { sortBy: string; category: string }
+        { page?: number; sortBy: string; category: string }
       >({
-        query: ({ sortBy, category }) => ({
+        query: ({ page = 1, sortBy, category }) => ({
           url: "/article",
           method: "POST",
           body: {
             action: "getArticles",
-            articlesPage: 1,
-            articlesCount: 12,
+            articlesPage: page,
+            articlesCount: 10,
             articlesSortBy: sortBy,
             articlesArticleBodyLen: -1,
             categoryUri: `dmoz/${category}`,
-            includeArticleCategories: true,
             includeArticleImage: true,
+            includeArticleSentiment: false,
+            includeArticleEventUri: false,
+            includeArticleBody: false,
             resultType: "articles",
             forceMaxDataTimeWindow: 31,
             isDuplicateFilter: "skipDuplicates",
@@ -39,8 +45,33 @@ export const newsApi = createApi({
           return response.articles.results;
         },
       }),
+      getArticleDetails: builder.query<Info, { articleUri: string }>({
+        query: ({ articleUri }) => ({
+          url: "/article",
+          method: "POST",
+          body: {
+            action: "getArticle",
+            articleUri,
+            infoArticleBodyLen: -1,
+            resultType: "info",
+            includeArticleSentiment: false,
+            includeArticleEventUri: false,
+            includeArticleLocation: true,
+            includeSourceTitle: false,
+            apiKey: apiKey,
+          },
+        }),
+        transformResponse: (
+          response: ArticleDetails,
+          _meta: FetchBaseQueryMeta | undefined,
+          arg: { articleUri: string }
+        ) => {
+          return response[arg.articleUri]?.info;
+        },
+      }),
     };
   },
 });
 
-export const { useGetArticlesByCategoryQuery } = newsApi;
+export const { useGetArticlesByCategoryQuery, useGetArticleDetailsQuery } =
+  newsApi;

@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router";
+
 interface NewsCardProps {
+  uri: string;
   image: string | null;
   title: string;
   authors: {
@@ -8,13 +11,23 @@ interface NewsCardProps {
 }
 
 export const NewsCard = ({
+  uri,
   image,
   title,
   authors,
   dateTime,
 }: NewsCardProps) => {
+  const navigate = useNavigate();
+
+  const handleArticleClick = () => {
+    navigate(`/article-details/${uri}`);
+  };
+
   return (
-    <div className="flex items-center gap-5">
+    <div
+      className="flex items-center gap-5 cursor-pointer"
+      onClick={handleArticleClick}
+    >
       <img
         src={image || "public/imgs/no-image-avaible.jpg"}
         className="w-36 h-32 object-cover flex-shrink-0"

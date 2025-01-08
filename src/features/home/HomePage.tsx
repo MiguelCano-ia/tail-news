@@ -7,7 +7,6 @@ import {
   useGetArticlesByCategoryQuery,
 } from "@/store";
 import { useEffect } from "react";
-import { PaginationComponent } from "@/shared/components/PaginationComponent";
 
 export const HomePage = () => {
   const { category } = useAppSelector((state) => state.articles);
@@ -42,12 +41,7 @@ export const HomePage = () => {
               <div className="font-semibold text-xl mb-5">
                 Trending {category}
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5 mb-20">
-                <TrendingNews />
-              </div>
-              <div className="mb-32">
-                <PaginationComponent />
-              </div>
+              <TrendingNews />
             </div>
           </div>
         </HomePageLayout>

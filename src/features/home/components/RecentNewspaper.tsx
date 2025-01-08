@@ -1,13 +1,19 @@
 import { useAppSelector } from "@/store";
+import { useNavigate } from "react-router";
 
 export const RecentNewspaper = () => {
   const { latestNews } = useAppSelector((state) => state.articles);
+  const navigate = useNavigate();
 
   if (!latestNews) return;
-  const { image, title, dateTime, authors } = latestNews;
+  const { uri, image, title, dateTime, authors } = latestNews;
+
+  const handleArticleClick = () => {
+    navigate(`/article-details/${uri}`);
+  };
 
   return (
-    <>
+    <div className="cursor-pointer" onClick={handleArticleClick}>
       <img
         src={image || "public/imgs/no-image-avaible.jpg"}
         className="min-w-full aspect-square object-cover"
@@ -30,6 +36,6 @@ export const RecentNewspaper = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };

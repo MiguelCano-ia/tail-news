@@ -1,3 +1,24 @@
+import { NewsCard } from "./NewsCard";
+import { useAppSelector, useGetArticlesByCategoryQuery } from "@/store";
+
 export const TrendingNews = () => {
-  return <div className="flex gap-4 items-center"></div>;
+  const { category } = useAppSelector((state) => state.articles);
+  const { data: articles } = useGetArticlesByCategoryQuery({
+    sortBy: "socialScore",
+    category,
+  });
+
+  return (
+    <>
+      {articles?.map(({ uri, title, dateTime, authors, image }) => (
+        <NewsCard
+          key={uri}
+          image={image}
+          title={title}
+          authors={authors}
+          dateTime={dateTime}
+        />
+      ))}
+    </>
+  );
 };

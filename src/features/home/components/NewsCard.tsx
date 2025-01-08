@@ -16,14 +16,14 @@ export const NewsCard = ({
   return (
     <div className="flex items-center gap-5">
       <img
-        src={image}
+        src={image || "public/imgs/no-image-avaible.jpg"}
         className="w-36 h-32 object-cover flex-shrink-0"
         alt="chica-linda"
       />
       <div className="flex flex-col gap-2">
         <div>{title}</div>
         <div className="flex gap-5">
-          <div>Athor: {authors[0]?.name}</div>
+          <div>Athor: {authors[0]?.name || "No avaible"}</div>
           <div>|</div>
           <div>
             {dateTime

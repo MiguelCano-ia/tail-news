@@ -11,16 +11,18 @@ export const newsApi = createApi({
   endpoints: (builder) => {
     return {
       // Tipado de la respuesta transformada
-      getArticlesByCategory: builder.query<Result[], { category: string }>({
-        query: ({ category }) => ({
+      getArticlesByCategory: builder.query<
+        Result[],
+        { sortBy: string; category: string }
+      >({
+        query: ({ sortBy, category }) => ({
           url: "/article",
           method: "POST",
           body: {
             action: "getArticles",
             articlesPage: 1,
-            articlesCount: 9,
-            articlesSortBy: "date",
-            articlesSortByAsc: false,
+            articlesCount: 12,
+            articlesSortBy: sortBy,
             articlesArticleBodyLen: -1,
             categoryUri: `dmoz/${category}`,
             includeArticleCategories: true,

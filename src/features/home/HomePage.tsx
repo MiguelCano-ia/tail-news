@@ -7,11 +7,13 @@ import {
   useGetArticlesByCategoryQuery,
 } from "@/store";
 import { useEffect } from "react";
+import { PaginationComponent } from "@/shared/components/PaginationComponent";
 
 export const HomePage = () => {
   const { category } = useAppSelector((state) => state.articles);
   const dispatch = useAppDispatch();
   const { data: articles, isLoading } = useGetArticlesByCategoryQuery({
+    sortBy: "date",
     category,
   });
 
@@ -25,20 +27,26 @@ export const HomePage = () => {
       {!isLoading ? (
         <HomePageLayout>
           <div className="grid grid-cols-1 container m-auto md:grid-cols-2 gap-x-5 gap-y-20 pt-16">
-            <div className="flex flex-col gap-5 h-fit">
+            <div className="flex flex-col gap-5 h-fit mt-2">
               <RecentNewspaper />
             </div>
 
             <div className="flex flex-col gap-5 h-fit">
-              <div className="font-medium text-lg">
-                Recent {category.toLowerCase()} news
+              <div className="font-semibold text-xl">
+                Recent {category} News
               </div>
               <RecentNews />
             </div>
 
             <div className="md:col-span-2">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-5 mb-32">
+              <div className="font-semibold text-xl mb-5">
+                Trending {category}
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5 mb-20">
                 <TrendingNews />
+              </div>
+              <div className="mb-32">
+                <PaginationComponent />
               </div>
             </div>
           </div>

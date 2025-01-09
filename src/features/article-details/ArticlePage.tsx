@@ -38,7 +38,7 @@ export const ArticlePage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           <div className="flex flex-col gap-1 lg:col-span-2">
             <img
-              src={image || "public/imgs/no-image-avaible.jpg"}
+              src={image || "/imgs/no-image-avaible.jpg"}
               alt="no-avaible"
               className="object-cover mb-5"
             />

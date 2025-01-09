@@ -1,7 +1,7 @@
 import { Result } from "@/store";
 import { useNavigate } from "react-router";
 
-export const MostRecentNews = ({
+export const FeaturedNews = ({
   mostRecentNews,
 }: {
   mostRecentNews: Result;
@@ -17,7 +17,7 @@ export const MostRecentNews = ({
   return (
     <div className="cursor-pointer" onClick={handleArticleClick}>
       <img
-        src={image || "public/imgs/no-image-avaible.jpg"}
+        src={image || "/imgs/no-image-avaible.jpg"}
         className="min-w-full aspect-square object-cover"
         alt="chica-linda"
       />

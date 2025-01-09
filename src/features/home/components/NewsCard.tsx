@@ -26,7 +26,7 @@ export const NewsCard = ({
   return (
     <div className="flex  gap-5 cursor-pointer" onClick={handleArticleClick}>
       <img
-        src={image || "public/imgs/no-image-avaible.jpg"}
+        src={image || "/imgs/no-image-avaible.jpg"}
         className="w-36 h-32 object-cover flex-shrink-0"
         alt="no-avaible"
       />

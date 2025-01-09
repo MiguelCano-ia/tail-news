@@ -24,27 +24,27 @@ export const NewsCard = ({
   };
 
   return (
-    <div
-      className="flex items-center gap-5 cursor-pointer"
-      onClick={handleArticleClick}
-    >
+    <div className="flex  gap-5 cursor-pointer" onClick={handleArticleClick}>
       <img
         src={image || "public/imgs/no-image-avaible.jpg"}
         className="w-36 h-32 object-cover flex-shrink-0"
-        alt="chica-linda"
+        alt="no-avaible"
       />
-      <div className="flex flex-col gap-2">
-        <div>{title}</div>
-        <div className="flex gap-5">
-          <div>Athor: {authors[0]?.name || "No avaible"}</div>
+      <div className="flex flex-col justify-around gap-2">
+        <div className="font-medium">{title}</div>
+        <div className="flex gap-2">
+          <div className="text-sm font-semibold">
+            {authors[0]?.name || "No avaible"}
+          </div>
           <div>|</div>
-          <div>
+          <div className="text-sm font-semibold">
             {dateTime
               ? new Date(dateTime).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "numeric",
                   day: "numeric",
                   hour: "2-digit",
+                  minute: "2-digit",
                 })
               : "No date available"}
           </div>

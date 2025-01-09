@@ -22,7 +22,7 @@ export const RecentNewspaper = () => {
       <div className="flex flex-col gap-3">
         <div>{title}</div>
         <div className="flex gap-5">
-          <div>Author: {authors[0]?.name || "No avaible"}</div>
+          <div>By: {authors[0]?.name || "No avaible"}</div>
           <div>|</div>
           <div>
             {dateTime
@@ -31,6 +31,7 @@ export const RecentNewspaper = () => {
                   month: "long",
                   day: "numeric",
                   hour: "2-digit",
+                  minute: "2-digit",
                 })
               : "No date available"}
           </div>

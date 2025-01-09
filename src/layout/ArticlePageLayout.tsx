@@ -3,7 +3,7 @@ import { Navbar } from "@/shared/components/Navbar";
 
 const navigation = [
   { name: "Home", to: "/" },
-  { name: "Search", to: "search" },
+  { name: "Search", to: "/search" },
 ];
 
 export const ArticlePageLayout = ({

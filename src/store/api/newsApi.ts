@@ -17,18 +17,31 @@ export const newsApi = createApi({
       // Tipado de la respuesta transformada
       getArticlesByCategory: builder.query<
         Result[],
-        { page?: number; sortBy: string; category: string }
+        {
+          page?: number;
+          sortBy: string;
+          category?: string;
+          pageCount?: number;
+          keyword?: string | string[];
+        }
       >({
-        query: ({ page = 1, sortBy, category }) => ({
+        query: ({
+          page = 1,
+          sortBy,
+          pageCount = 10,
+          category = "dmoz",
+          keyword = "",
+        }) => ({
           url: "/article",
           method: "POST",
           body: {
             action: "getArticles",
+            keyword: keyword,
             articlesPage: page,
-            articlesCount: 10,
+            articlesCount: pageCount,
             articlesSortBy: sortBy,
             articlesArticleBodyLen: -1,
-            categoryUri: `dmoz/${category}`,
+            categoryUri: category,
             includeArticleImage: true,
             includeArticleSentiment: false,
             includeArticleEventUri: false,
@@ -58,6 +71,7 @@ export const newsApi = createApi({
             includeArticleEventUri: false,
             includeArticleLocation: true,
             includeSourceTitle: false,
+            includeArticleCategories: true,
             apiKey: apiKey,
           },
         }),

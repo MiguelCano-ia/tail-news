@@ -29,6 +29,7 @@ export interface Articles {
 
 export interface Result {
   uri: string;
+  keywords: string | string[];
   lang: Lang;
   isDuplicate: boolean;
   date: Date;

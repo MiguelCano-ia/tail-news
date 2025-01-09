@@ -9,7 +9,7 @@ export const TrendingNews = () => {
   const { data: articles } = useGetArticlesByCategoryQuery({
     page,
     sortBy: "socialScore",
-    category,
+    category: `dmoz/${category}`,
   });
 
   const prevPage = () => {

@@ -13,7 +13,7 @@ export const HomePage = () => {
   const dispatch = useAppDispatch();
   const { data: articles, isLoading } = useGetArticlesByCategoryQuery({
     sortBy: "date",
-    category,
+    category: `dmoz/${category}`,
   });
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export const HomePage = () => {
     <>
       {!isLoading ? (
         <HomePageLayout>
-          <div className="grid grid-cols-1 container m-auto md:grid-cols-2 gap-x-5 gap-y-20 pt-16">
+          <div className="grid grid-cols-1 container m-auto lg:grid-cols-2 gap-x-5 gap-y-20 pt-16">
             <div className="flex flex-col gap-5 h-fit mt-2">
               <RecentNewspaper />
             </div>
@@ -37,7 +37,7 @@ export const HomePage = () => {
               <RecentNews />
             </div>
 
-            <div className="md:col-span-2">
+            <div className="lg:col-span-2">
               <div className="font-semibold text-xl mb-5">
                 Trending {category}
               </div>

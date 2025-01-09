@@ -1,3 +1,5 @@
+import { Author, Category } from "./article.interface";
+
 export interface ArticleDetails {
   [articleUri: string]: ArticleUri;
 }
@@ -19,7 +21,8 @@ export interface Info {
   url: string;
   title: string;
   body: string;
-  authors: string[];
+  authors: Author[];
+  categories: Category[];
   image: string;
   location: null;
 }

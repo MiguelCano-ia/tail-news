@@ -1,12 +1,10 @@
-import { useAppSelector } from "@/store";
+import { Result } from "@/store";
 import { NewsCard } from "./NewsCard";
 
-export const RecentNews = () => {
-  const { results } = useAppSelector((state) => state.articles);
-
+export const RecentNews = ({ recentNews }: { recentNews: Result[] }) => {
   return (
     <>
-      {results.map(({ uri, image, title, authors, dateTime }) => (
+      {recentNews.map(({ uri, image, title, authors, dateTime }) => (
         <NewsCard
           key={uri}
           uri={uri}

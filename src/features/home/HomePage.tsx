@@ -1,25 +1,15 @@
 import { HomePageLayout } from "@/layout/HomePageLayout";
-import { RecentNews, RecentNewspaper, TrendingNews } from "./components";
-import {
-  setNews,
-  useAppDispatch,
-  useAppSelector,
-  useGetArticlesByCategoryQuery,
-} from "@/store";
-import { useEffect } from "react";
+import { RecentNews, MostRecentNews, TrendingNews } from "./components";
+import { useAppSelector, useGetArticlesByCategoryQuery } from "@/store";
 
 export const HomePage = () => {
   const { category } = useAppSelector((state) => state.articles);
-  const dispatch = useAppDispatch();
   const { data: articles, isLoading } = useGetArticlesByCategoryQuery({
     sortBy: "date",
     category: `dmoz/${category}`,
   });
 
-  useEffect(() => {
-    if (!articles) return;
-    dispatch(setNews(articles));
-  }, [category, articles]);
+  if (!articles) return;
 
   return (
     <>
@@ -27,14 +17,14 @@ export const HomePage = () => {
         <HomePageLayout>
           <div className="grid grid-cols-1 container m-auto lg:grid-cols-2 gap-x-5 gap-y-20 pt-16">
             <div className="flex flex-col gap-5 h-fit mt-2">
-              <RecentNewspaper />
+              <MostRecentNews mostRecentNews={articles[0]} />
             </div>
 
             <div className="flex flex-col gap-5 h-fit">
               <div className="font-semibold text-xl">
                 Recent {category} News
               </div>
-              <RecentNews />
+              <RecentNews recentNews={articles.slice(1, 7)} />
             </div>
 
             <div className="lg:col-span-2">

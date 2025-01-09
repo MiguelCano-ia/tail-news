@@ -1,12 +1,14 @@
-import { useAppSelector } from "@/store";
+import { Result } from "@/store";
 import { useNavigate } from "react-router";
 
-export const RecentNewspaper = () => {
-  const { latestNews } = useAppSelector((state) => state.articles);
+export const MostRecentNews = ({
+  mostRecentNews,
+}: {
+  mostRecentNews: Result;
+}) => {
   const navigate = useNavigate();
 
-  if (!latestNews) return;
-  const { uri, image, title, dateTime, authors } = latestNews;
+  const { uri, image, title, dateTime, authors } = mostRecentNews;
 
   const handleArticleClick = () => {
     navigate(`/article-details/${uri}`);
@@ -26,7 +28,7 @@ export const RecentNewspaper = () => {
           <div>|</div>
           <div>
             {dateTime
-              ? new Date(latestNews.dateTime).toLocaleDateString("en-US", {
+              ? new Date(dateTime).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",

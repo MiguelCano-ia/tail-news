@@ -1,3 +1,3 @@
 export * from "./RecentNews";
-export * from "./RecentNewspaper";
+export * from "./MostRecentNews";
 export * from "./TrendingNews";

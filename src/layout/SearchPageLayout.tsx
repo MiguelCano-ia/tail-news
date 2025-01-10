@@ -14,10 +14,12 @@ export const SearchPageLayout = ({
 }) => {
   return (
     <>
-      <div className="min-h-screen flex flex-col justify-between">
+      <div className="min-h-screen flex flex-col">
         <Navbar navigationRoutes={navigation} />
-        {children}
-        <Footer />
+        <div className="min-h-screen  flex flex-col justify-between mt-10">
+          {children}
+          <Footer />
+        </div>
       </div>
     </>
   );

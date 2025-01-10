@@ -1,7 +1,5 @@
 import { useGetArticlesByCategoryQuery } from "@/store";
-import { FeaturedNews } from "./FeaturedNews";
-import { RecentNews } from "./RecentNews";
-import { TrendingNews } from "./TrendingNews";
+import { TrendingNews, FeaturedNews, RecentNews } from "./";
 
 export const News = ({ category }: { category: string }) => {
   const { data: articles } = useGetArticlesByCategoryQuery({

@@ -1,5 +1,5 @@
 import { PaginationComponent } from "@/shared/components/PaginationComponent";
-import { NewsCard } from "./NewsCard";
+import { NewsCard } from "./NewsCard/NewsCard";
 import { useAppSelector, useGetArticlesByCategoryQuery } from "@/store";
 import { useState } from "react";
 
@@ -38,6 +38,7 @@ export const TrendingNews = () => {
       <div className="mb-28">
         <PaginationComponent
           page={page}
+          numberArticles={articles?.length || 0}
           prevPage={prevPage}
           nextPage={nextPage}
         />

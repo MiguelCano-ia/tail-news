@@ -1,5 +1,5 @@
 import { Result } from "@/store";
-import { NewsCard } from "./NewsCard";
+import { NewsCard } from "./NewsCard/NewsCard";
 
 export const RecentNews = ({ recentNews }: { recentNews: Result[] }) => {
   return (

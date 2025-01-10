@@ -8,12 +8,14 @@ import {
 
 interface PaginationProps {
   page: number;
+  numberArticles: number;
   prevPage: () => void;
   nextPage: () => void;
 }
 
 export const PaginationComponent = ({
   page,
+  numberArticles,
   prevPage,
   nextPage,
 }: PaginationProps) => {
@@ -29,7 +31,12 @@ export const PaginationComponent = ({
           />
         </PaginationItem>
         <PaginationItem>
-          <PaginationNext onClick={nextPage} />
+          <PaginationNext
+            className={
+              numberArticles < 9 ? "pointer-events-none opacity-50" : undefined
+            }
+            onClick={nextPage}
+          />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

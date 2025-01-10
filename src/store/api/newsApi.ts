@@ -47,7 +47,6 @@ export const newsApi = createApi({
             includeArticleEventUri: false,
             includeArticleBody: false,
             resultType: "articles",
-            forceMaxDataTimeWindow: 31,
             isDuplicateFilter: "skipDuplicates",
             lang: "eng",
             apiKey: apiKey,

@@ -23,6 +23,8 @@ export function SelectCategory() {
   const { searchCategory } = useAppSelector((state) => state.articles);
   const [open, setOpen] = useState(false);
 
+  console.log(searchCategory);
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -32,15 +34,16 @@ export function SelectCategory() {
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {searchCategory
+          {searchCategory !== "dmoz"
             ? NEWS_CATEGORIES.find((cat) => cat.uri === searchCategory)?.label
             : "Select category..."}
+
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search category..." className="h-9" />
+          <CommandInput placeholder="Search article.." className="h-9" />
           <CommandList>
             <CommandEmpty>No category found.</CommandEmpty>
             <CommandGroup>

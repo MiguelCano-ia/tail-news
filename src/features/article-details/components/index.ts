@@ -1,3 +1,2 @@
-export * from "./ArticleCategories";
+export * from "./ArticleContent";
 export * from "./FormatText";
-export * from "./RelatedArticles";

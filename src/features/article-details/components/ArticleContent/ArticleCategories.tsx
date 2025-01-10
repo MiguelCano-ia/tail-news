@@ -21,7 +21,7 @@ export const ArticleCategories = ({
       {categoriesArticle.map((category, index) => (
         <span
           key={index}
-          className="text-md  sm:text-lg text-center text-primary font-semibold"
+          className="text-sm sm:text-lg text-center text-primary font-semibold"
         >
           {category}
         </span>

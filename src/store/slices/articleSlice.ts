@@ -7,7 +7,7 @@ interface ArticleInitialState {
 
 const initialState: ArticleInitialState = {
   category: "",
-  searchCategory: "dmoz",
+  searchCategory: "dmoz/Home",
 };
 
 export const articleSlice = createSlice({

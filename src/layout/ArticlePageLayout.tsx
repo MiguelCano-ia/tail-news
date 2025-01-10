@@ -14,7 +14,7 @@ export const ArticlePageLayout = ({
   return (
     <>
       <Navbar navigationRoutes={navigation} />
-      <div className="min-h-screen">{children}</div>
+      {children}
       <Footer />
     </>
   );

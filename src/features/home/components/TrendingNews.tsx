@@ -35,7 +35,7 @@ export const TrendingNews = () => {
           />
         ))}
       </div>
-      <div className="mb-32">
+      <div className="mb-28">
         <PaginationComponent
           page={page}
           prevPage={prevPage}

@@ -28,7 +28,7 @@ export const newsApi = createApi({
         query: ({
           page = 1,
           sortBy,
-          pageCount = 10,
+          pageCount = 6,
           category = "dmoz",
           keyword = "",
         }) => ({

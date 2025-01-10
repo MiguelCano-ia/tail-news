@@ -1,3 +1,4 @@
+import { ImageWithFallback } from "@/shared/components/ImageWithFallBack";
 import { useNavigate } from "react-router";
 
 interface NewsCardProps {
@@ -25,21 +26,22 @@ export const NewsCard = ({
 
   return (
     <div
-      className="flex gap-5 cursor-pointer items-center"
+      className="flex gap-3 sm:gap-5 cursor-pointer items-center"
       onClick={handleArticleClick}
     >
-      <img
-        src={image || "/imgs/no-image-avaible.jpg"}
-        className="w-36 h-32 object-cover flex-shrink-0"
+      <ImageWithFallback
+        src={image}
+        fallbackSrc={"/imgs/no-image-avaible.jpg"}
         alt="no-avaible"
+        className="w-36 h-32 object-cover flex-shrink-0"
       />
       <div className="flex flex-col gap-2">
-        <div className="font-medium text-sm">{title}</div>
+        <div className="font-medium text-sm line-clamp-3">{title}</div>
         <div className="flex gap-2">
-          <div className="text-sm font-semibold">
+          <div className="text-sm font-semibold hidden sm:block">
             {authors[0]?.name || "No avaible"}
           </div>
-          <div>|</div>
+          <div className="hidden sm:block">|</div>
           <div className="text-sm font-semibold">
             {dateTime
               ? new Date(dateTime).toLocaleDateString("en-US", {

@@ -22,7 +22,7 @@ export const News = ({ category }: { category: string }) => {
   return (
     <>
       <div className="flex flex-col gap-5 h-fit mt-2">
-        {isLoading || isFetching ? (
+        {isFetching || isLoading ? (
           <FeaturedNewsSkeleton />
         ) : (
           <FeaturedNews mostRecentNews={articles[0]} />
@@ -31,19 +31,19 @@ export const News = ({ category }: { category: string }) => {
 
       <div className="flex flex-col gap-5 h-fit">
         {isFetching || isLoading ? (
-          Array.from({ length: 6 }).map((_, index) => (
+          Array.from({ length: 5 }).map((_, index) => (
             <NewsCardSkeleton key={index} />
           ))
         ) : (
           <>
-            <div className="font-semibold text-xl">Recent {category} News</div>
-            <RecentNews recentNews={articles.slice(1, 7)} />
+            <div className="font-semibold text-2xl">Recent {category} News</div>
+            <RecentNews recentNews={articles.slice(1)} />
           </>
         )}
       </div>
 
       <div className="lg:col-span-2">
-        <div className="font-semibold text-xl mb-5">Trending {category}</div>
+        <div className="font-semibold text-2xl mb-5">Trending {category}</div>
         <TrendingNews />
       </div>
     </>

@@ -2,7 +2,7 @@ import { NewsCard } from "@/features/home/components/NewsCard/NewsCard";
 import { NewsCardSkeleton } from "@/features/home/components/NewsCard/NewsCardSkeleton";
 import { PaginationComponent } from "@/shared/components/PaginationComponent";
 import { useAppSelector, useGetArticlesByCategoryQuery } from "@/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const SearchList = ({ search }: { search: string | string[] }) => {
   const { searchCategory } = useAppSelector((state) => state.articles);
@@ -20,6 +20,10 @@ export const SearchList = ({ search }: { search: string | string[] }) => {
     pageCount: 9,
   });
 
+  useEffect(() => {
+    setPage(1);
+  }, [searchCategory, search]);
+
   if (articles?.length === 0)
     return (
       <div className="font-bold text-2xl mt-10 md:mt-20 mb-10 md:mb-0">
@@ -34,6 +38,7 @@ export const SearchList = ({ search }: { search: string | string[] }) => {
   };
 
   const nextPage = () => {
+    if (articles?.length === 0) return;
     setPage(page + 1);
   };
   return (
@@ -58,6 +63,7 @@ export const SearchList = ({ search }: { search: string | string[] }) => {
           {!isLoading && !isFetching && (
             <PaginationComponent
               page={page}
+              pageCount={9}
               numberArticles={articles?.length || 0}
               prevPage={prevPage}
               nextPage={nextPage}

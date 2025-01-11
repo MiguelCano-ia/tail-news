@@ -17,7 +17,7 @@ export const TrendingNews = () => {
     setPage(page - 1);
   };
   const nextPage = () => {
-    if (articles && articles?.length < 10) return;
+    if (articles?.length === 0) return;
     setPage(page + 1);
   };
 
@@ -38,6 +38,7 @@ export const TrendingNews = () => {
       <div className="mb-28">
         <PaginationComponent
           page={page}
+          pageCount={6}
           numberArticles={articles?.length || 0}
           prevPage={prevPage}
           nextPage={nextPage}

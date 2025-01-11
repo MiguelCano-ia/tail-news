@@ -8,6 +8,7 @@ import {
 
 interface PaginationProps {
   page: number;
+  pageCount: number;
   numberArticles: number;
   prevPage: () => void;
   nextPage: () => void;
@@ -15,6 +16,7 @@ interface PaginationProps {
 
 export const PaginationComponent = ({
   page,
+  pageCount,
   numberArticles,
   prevPage,
   nextPage,
@@ -33,7 +35,9 @@ export const PaginationComponent = ({
         <PaginationItem>
           <PaginationNext
             className={
-              numberArticles < 9 ? "pointer-events-none opacity-50" : undefined
+              numberArticles < pageCount
+                ? "pointer-events-none opacity-50"
+                : undefined
             }
             onClick={nextPage}
           />

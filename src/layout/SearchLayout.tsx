@@ -7,11 +7,7 @@ const navigation = [
   { name: "Search", to: "" },
 ];
 
-export const SearchPageLayout = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const SearchLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <div className="min-h-screen flex flex-col">

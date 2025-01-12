@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { SearchList, SelectCategory } from "./components";
-import { SearchPageLayout } from "@/layout/SearchPageLayout";
 import { useRef, useState } from "react";
+import { SearchLayout } from "@/layout/SearchLayout";
 
 export const SearchPage = () => {
   const [search, setSearch] = useState<string | string[]>("");
@@ -18,7 +18,7 @@ export const SearchPage = () => {
   };
 
   return (
-    <SearchPageLayout>
+    <SearchLayout>
       <div className="flex flex-col gap-10 justify-center items-center mt-5 mb-14">
         <div className="flex gap-3 sm:gap-2 max-sm:flex-col">
           <SelectCategory />
@@ -30,6 +30,6 @@ export const SearchPage = () => {
         </div>
         <SearchList search={search} />
       </div>
-    </SearchPageLayout>
+    </SearchLayout>
   );
 };

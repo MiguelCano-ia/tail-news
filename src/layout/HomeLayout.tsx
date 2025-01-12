@@ -10,7 +10,7 @@ const navigation = [
   { name: "Search", to: "search" },
 ];
 
-export const HomePageLayout = ({ children }: { children: React.ReactNode }) => {
+export const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <div className="min-h-screen flex flex-col justify-between">

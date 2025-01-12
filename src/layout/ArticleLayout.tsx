@@ -7,7 +7,7 @@ const navigation = [
   { name: "Search", to: "/search" },
 ];
 
-export const ArticlePageLayout = () => {
+export const ArticleLayout = () => {
   return (
     <>
       <div className="flex justify-between flex-col min-h-screen">

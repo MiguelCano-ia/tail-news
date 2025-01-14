@@ -39,7 +39,7 @@ export const NewsCard = ({
         <div className="font-medium text-sm line-clamp-3">{title}</div>
         <div className="flex gap-2">
           <div className="text-sm font-semibold hidden sm:block">
-            {authors[0]?.name || "No avaibl"}
+            {authors[0]?.name || "No avaible"}
           </div>
           <div className="hidden sm:block">|</div>
           <div className="text-sm font-semibold">

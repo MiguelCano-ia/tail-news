@@ -1,11 +1,16 @@
-import { AuthState, initialState } from "./auth.interfaces";
+import { initialState, User } from "./auth.interfaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setSignInUser: (state, action: PayloadAction<AuthState>) => {
+    setCheckingAuth: (state) => {
+      state.status = "checking";
+    },
+    setSignInUser: (state, action: PayloadAction<User>) => {
+      state.status = "authenticated";
+      state.uid = action.payload.uid;
       state.displayName = action.payload.displayName;
       state.email = action.payload.email;
       state.photoURL = action.payload.photoURL;
@@ -15,6 +20,8 @@ export const authSlice = createSlice({
       state,
       action: PayloadAction<{ errorMessage: string | null }>
     ) => {
+      state.status = "no-authenticated";
+      state.uid = null;
       state.displayName = null;
       state.email = null;
       state.photoURL = null;
@@ -22,4 +29,5 @@ export const authSlice = createSlice({
     },
   },
 });
-export const { setSignInUser, setSignOutUser } = authSlice.actions;
+export const { setCheckingAuth, setSignInUser, setSignOutUser } =
+  authSlice.actions;

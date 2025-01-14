@@ -4,10 +4,13 @@ import {
   DisclosurePanel,
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { DarkModeToggle } from "./DarkModeToggle";
+import { DarkModeToggle } from "../DarkModeToggle";
 import { NavLink, useNavigate, useParams } from "react-router";
 import { setCategory, useAppDispatch } from "@/store";
 import { useEffect, useMemo } from "react";
+import { Avatar } from "./Avatar";
+import { useCheckingAuth } from "@/features";
+import { BackButton } from "@/features/auth/components";
 
 interface NavigationRoutesProps {
   navigationRoutes: {
@@ -18,6 +21,7 @@ interface NavigationRoutesProps {
 
 export const Navbar = ({ navigationRoutes }: NavigationRoutesProps) => {
   const { category = "Home" } = useParams();
+  const { status } = useCheckingAuth();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -46,7 +50,7 @@ export const Navbar = ({ navigationRoutes }: NavigationRoutesProps) => {
     }`;
 
   return (
-    <Disclosure as="nav" className="bg-gray-200 dark:bg-gray-800">
+    <Disclosure as="nav" className="bg-gray-200 dark:bg-gray-800 w-screen">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 ">
@@ -86,6 +90,11 @@ export const Navbar = ({ navigationRoutes }: NavigationRoutesProps) => {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <DarkModeToggle />
+                {status === "authenticated" ? (
+                  <Avatar />
+                ) : (
+                  <BackButton label="Sign in" href="/auth/sign-in" />
+                )}
               </div>
             </div>
           </div>

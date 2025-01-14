@@ -14,23 +14,37 @@ import {
 import { Input } from "@/components/ui/input";
 import { CardWrapper } from "./components";
 import { signUpSchema } from "./validations/signUp.schema";
-import { signUpWithEmailAndPassword } from "@/firebase/provider";
+import { starSignUpWithEmailAndPassword } from "@/store/slices/auth/thuks";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { fileUpload } from "./helpers/fileUpload";
 
 export const SignUpPage = () => {
+  const dispatch = useAppDispatch();
+  const { status } = useAppSelector((state) => state.auth);
+
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       username: "",
       email: "",
       password: "",
-      avatar: new DataTransfer().files,
+      profilePicture: new DataTransfer().files,
     },
   });
 
-  const fileRef = form.register("avatar");
+  const fileRef = form.register("profilePicture");
 
-  const onSubmit = (values: z.infer<typeof signUpSchema>) => {
-    signUpWithEmailAndPassword(values);
+  const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
+    const photoURL: string | null = values.profilePicture?.[0]
+      ? await fileUpload(values.profilePicture[0])
+      : null;
+    dispatch(
+      starSignUpWithEmailAndPassword({
+        ...values,
+        displayName: values.username,
+        photoURL,
+      })
+    );
   };
 
   return (
@@ -49,7 +63,12 @@ export const SignUpPage = () => {
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input type="text" placeholder="johndoe" {...field} />
+                  <Input
+                    type="text"
+                    placeholder="johndoe"
+                    disabled={status === "checking"}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -65,6 +84,7 @@ export const SignUpPage = () => {
                   <Input
                     type="email"
                     placeholder="example@gmail.com"
+                    disabled={status === "checking"}
                     {...field}
                   />
                 </FormControl>
@@ -79,7 +99,12 @@ export const SignUpPage = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" placeholder="*********" {...field} />
+                  <Input
+                    type="password"
+                    placeholder="*********"
+                    {...field}
+                    disabled={status === "checking"}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -87,19 +112,28 @@ export const SignUpPage = () => {
           />
           <FormField
             control={form.control}
-            name="avatar"
+            name="profilePicture"
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Avatar (optional)</FormLabel>
                 <FormControl>
-                  <Input type="file" {...fileRef} className="mt-5" />
+                  <Input
+                    type="file"
+                    {...fileRef}
+                    className="mt-5"
+                    disabled={status === "checking"}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full text-md">
+          <Button
+            type="submit"
+            className="w-full text-md"
+            disabled={status === "checking"}
+          >
             Sign up
           </Button>
         </form>

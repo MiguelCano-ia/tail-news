@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface ArticleInitialState {
   category: string;
   searchCategory: string;
+  favoriteArticles: string[];
 }
 
 const initialState: ArticleInitialState = {
   category: "",
   searchCategory: "dmoz/Home",
+  favoriteArticles: [],
 };
 
 export const articleSlice = createSlice({
@@ -20,6 +22,23 @@ export const articleSlice = createSlice({
     setSearchCategory: (state, action: PayloadAction<string>) => {
       state.searchCategory = action.payload;
     },
+    setFavoriteArticles: (state, action: PayloadAction<string>) => {
+      if (state.favoriteArticles.includes(action.payload)) {
+        state.favoriteArticles = state.favoriteArticles.filter(
+          (article) => article !== action.payload
+        );
+      } else {
+        state.favoriteArticles.push(action.payload);
+      }
+    },
+    setLoadedFavoriteArticles: (state, action: PayloadAction<string[]>) => {
+      state.favoriteArticles = action.payload;
+    },
   },
 });
-export const { setCategory, setSearchCategory } = articleSlice.actions;
+export const {
+  setCategory,
+  setSearchCategory,
+  setFavoriteArticles,
+  setLoadedFavoriteArticles,
+} = articleSlice.actions;

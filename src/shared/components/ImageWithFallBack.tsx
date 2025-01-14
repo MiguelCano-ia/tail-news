@@ -3,6 +3,7 @@ interface ImageWithFallbackProps {
   fallbackSrc: string;
   alt: string;
   className?: string;
+  handleArticleClick: () => void;
 }
 
 export const ImageWithFallback = ({
@@ -10,6 +11,7 @@ export const ImageWithFallback = ({
   fallbackSrc,
   alt,
   className,
+  handleArticleClick,
 }: ImageWithFallbackProps) => {
   const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = fallbackSrc;
@@ -21,6 +23,7 @@ export const ImageWithFallback = ({
       onError={handleError}
       alt={alt}
       className={className}
+      onClick={handleArticleClick}
     />
   );
 };

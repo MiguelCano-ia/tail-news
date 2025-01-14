@@ -5,6 +5,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "@/store";
+import { loadFavoriteArticles } from "@/store/slices/thunks";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 
@@ -19,6 +20,7 @@ export const useCheckingAuth = () => {
       const { uid, displayName, email, photoURL } = user;
 
       dispatch(setSignInUser({ uid, displayName, email, photoURL }));
+      dispatch(loadFavoriteArticles());
     });
   }, []);
 

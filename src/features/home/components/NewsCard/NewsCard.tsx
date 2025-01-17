@@ -1,4 +1,8 @@
 import { ImageWithFallback } from "@/shared/components/ImageWithFallBack";
+import { Star } from "lucide-react";
+import { uploadFavoriteArticles } from "@/store/slices/thunks";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { useCallback } from "react";
 import { useNavigate } from "react-router";
 
 interface NewsCardProps {
@@ -18,22 +22,27 @@ export const NewsCard = ({
   authors,
   dateTime,
 }: NewsCardProps) => {
+  const { status } = useAppSelector((state) => state.auth);
+  const { favoriteArticles } = useAppSelector((state) => state.articles);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleArticleClick = () => {
+  const handleArticleClick = useCallback(() => {
     navigate(`/article-details/${uri}`);
+  }, [uri, navigate]);
+
+  const handleFavoriteArticles = () => {
+    dispatch(uploadFavoriteArticles({ uri }));
   };
 
   return (
-    <div
-      className="flex gap-3 sm:gap-5 cursor-pointer items-center"
-      onClick={handleArticleClick}
-    >
+    <div className="flex gap-3 sm:gap-5 items-center">
       <ImageWithFallback
         src={image}
         fallbackSrc={"/imgs/no-image-avaible.jpg"}
         alt="no-avaible"
-        className="w-36 h-32 object-cover flex-shrink-0"
+        className="w-36 h-32 object-cover flex-shrink-0 cursor-pointer"
+        handleArticleClick={handleArticleClick}
       />
       <div className="flex flex-col gap-2">
         <div className="font-medium text-sm line-clamp-3">{title}</div>
@@ -54,6 +63,15 @@ export const NewsCard = ({
               : "No date available"}
           </div>
         </div>
+        {status === "authenticated" && (
+          <Star
+            strokeWidth={0.75}
+            className={`cursor-pointer ${
+              favoriteArticles.includes(uri) ? "text-yellow-500" : ""
+            }`}
+            onClick={handleFavoriteArticles}
+          />
+        )}
       </div>
     </div>
   );

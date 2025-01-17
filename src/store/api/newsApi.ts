@@ -57,7 +57,34 @@ export const newsApi = createApi({
           return response.articles.results;
         },
       }),
-      getArticleDetails: builder.query<Info, { articleUri: string }>({
+      getArticleDetails: builder.query<Info, { articleUri: string | string[] }>(
+        {
+          query: ({ articleUri }) => ({
+            url: "/article",
+            method: "POST",
+            body: {
+              action: "getArticle",
+              articleUri,
+              infoArticleBodyLen: -1,
+              resultType: "info",
+              includeArticleSentiment: false,
+              includeArticleEventUri: false,
+              includeArticleLocation: true,
+              includeSourceTitle: false,
+              includeArticleCategories: true,
+              apiKey: apiKey,
+            },
+          }),
+          transformResponse: (
+            response: ArticleDetails,
+            _meta: FetchBaseQueryMeta | undefined,
+            arg: { articleUri: string }
+          ) => {
+            return response[arg.articleUri]?.info;
+          },
+        }
+      ),
+      getFavoriteArticles: builder.query<Info[], { articleUri: string[] }>({
         query: ({ articleUri }) => ({
           url: "/article",
           method: "POST",
@@ -74,17 +101,16 @@ export const newsApi = createApi({
             apiKey: apiKey,
           },
         }),
-        transformResponse: (
-          response: ArticleDetails,
-          _meta: FetchBaseQueryMeta | undefined,
-          arg: { articleUri: string }
-        ) => {
-          return response[arg.articleUri]?.info;
+        transformResponse: (response: ArticleDetails) => {
+          return Object.values(response).map((article) => article.info);
         },
       }),
     };
   },
 });
 
-export const { useGetArticlesByCategoryQuery, useGetArticleDetailsQuery } =
-  newsApi;
+export const {
+  useGetArticlesByCategoryQuery,
+  useGetArticleDetailsQuery,
+  useGetFavoriteArticlesQuery,
+} = newsApi;

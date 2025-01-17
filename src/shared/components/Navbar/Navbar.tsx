@@ -4,10 +4,13 @@ import {
   DisclosurePanel,
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { DarkModeToggle } from "./DarkModeToggle";
-import { NavLink, useNavigate, useParams } from "react-router";
+import { DarkModeToggle } from "../DarkModeToggle";
+import { Link, NavLink, useNavigate, useParams } from "react-router";
 import { setCategory, useAppDispatch } from "@/store";
 import { useEffect, useMemo } from "react";
+import { Avatar } from "./Avatar";
+import { useCheckingAuth } from "@/features";
+import { Button } from "@/components/ui/button";
 
 interface NavigationRoutesProps {
   navigationRoutes: {
@@ -18,6 +21,7 @@ interface NavigationRoutesProps {
 
 export const Navbar = ({ navigationRoutes }: NavigationRoutesProps) => {
   const { category = "Home" } = useParams();
+  const { status } = useCheckingAuth();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -35,7 +39,7 @@ export const Navbar = ({ navigationRoutes }: NavigationRoutesProps) => {
 
   const getLinkStyles = ({ isActive }: { isActive: boolean }) =>
     isActive
-      ? "border-b-2 border-black dark:bg-gray-900 dark:text-white dark:border-none dark:rounded-md px-3 py-2 text-sm font-medium"
+      ? "border-b-2 border-primary dark:bg-gray-900 dark:text-white dark:border-none dark:rounded-md px-3 py-2 text-sm font-medium"
       : "dark:text-gray-300 dark:border-none dark:hover:bg-gray-700 dark:hover:text-white dark:rounded-md px-3 py-2 text-sm font-medium";
 
   const getMobileLinkStyles = ({ isActive }: { isActive: boolean }) =>
@@ -46,7 +50,7 @@ export const Navbar = ({ navigationRoutes }: NavigationRoutesProps) => {
     }`;
 
   return (
-    <Disclosure as="nav" className="bg-gray-200 dark:bg-gray-800">
+    <Disclosure as="nav" className="bg-gray-200 dark:bg-gray-800 min-w-screen">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 ">
@@ -86,6 +90,13 @@ export const Navbar = ({ navigationRoutes }: NavigationRoutesProps) => {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <DarkModeToggle />
+                {status === "authenticated" ? (
+                  <Avatar />
+                ) : (
+                  <Link to="/auth/sign-in">
+                    <Button variant="link">Sign in</Button>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

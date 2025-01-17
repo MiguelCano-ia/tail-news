@@ -13,12 +13,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { CardWrapper } from "./components";
-import { useAppDispatch } from "@/store";
-import { startSignInWithGoogle } from "@/store/slices/auth/thuks";
-import { signInWithPasswordAndEmail } from "@/firebase/provider";
+import { useAppDispatch, useAppSelector } from "@/store";
+import {
+  startSignInWIthEmailAndPassword,
+  startSignInWithGoogle,
+} from "@/store/slices/auth/thuks";
 
 export const SignInPage = () => {
   const dispatch = useAppDispatch();
+  const { status } = useAppSelector((state) => state.auth);
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
@@ -29,7 +32,7 @@ export const SignInPage = () => {
   });
 
   const onSubmit = (values: z.infer<typeof signInSchema>) => {
-    signInWithPasswordAndEmail(values);
+    dispatch(startSignInWIthEmailAndPassword(values));
   };
 
   const googleSignIn = () => {
@@ -55,6 +58,7 @@ export const SignInPage = () => {
                   <Input
                     type="email"
                     placeholder="example@gmail.com"
+                    disabled={status === "checking"}
                     {...field}
                   />
                 </FormControl>
@@ -69,26 +73,36 @@ export const SignInPage = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" placeholder="*********" {...field} />
+                  <Input
+                    type="password"
+                    placeholder="*********"
+                    disabled={status === "checking"}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full text-md">
-            Sign in
-          </Button>
           <Button
-            variant="outline"
             type="submit"
-            className="w-full text-md pr-10"
-            onClick={googleSignIn}
+            className="w-full text-md"
+            disabled={status === "checking"}
           >
-            <img src="/svg/google-icon.svg" alt="google-icon" />
-            Google
+            Sign in
           </Button>
         </form>
       </Form>
+      <Button
+        variant="outline"
+        type="submit"
+        className="w-full text-md pr-10 mt-2"
+        onClick={googleSignIn}
+        disabled={status === "checking"}
+      >
+        <img src="/svg/google-icon.svg" alt="google-icon" />
+        Google
+      </Button>
     </CardWrapper>
   );
 };

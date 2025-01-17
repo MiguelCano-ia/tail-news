@@ -14,7 +14,7 @@ export const signUpSchema = z.object({
       message:
         "Password must have at least one uppercase letter and one number",
     }),
-  avatar: z
+  profilePicture: z
     .instanceof(FileList)
     .optional()
     .refine(

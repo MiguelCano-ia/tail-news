@@ -1,5 +1,5 @@
 import { Footer } from "@/shared/components/Footer";
-import { Navbar } from "@/shared/components/Navbar";
+import { Navbar } from "@/shared/components/Navbar/Navbar";
 
 const navigation = [
   { name: "Home", to: "" },

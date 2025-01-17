@@ -6,6 +6,7 @@ import {
 } from "@/firebase/provider";
 import { AppDispatch } from "@/store/store";
 import { setCheckingAuth, setSignInUser, setSignOutUser } from "./authSlice";
+import { setEmptyFavoriteArticles } from "../articleSlice";
 
 export const startSignInWithGoogle = () => {
   return async (dispatch: AppDispatch) => {
@@ -84,5 +85,6 @@ export const startSignOut = () => {
   return async (dispatch: AppDispatch) => {
     await signOutFirebase();
     dispatch(setSignOutUser({ errorMessage: null }));
+    dispatch(setEmptyFavoriteArticles());
   };
 };

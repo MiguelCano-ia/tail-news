@@ -34,6 +34,9 @@ export const articleSlice = createSlice({
     setLoadedFavoriteArticles: (state, action: PayloadAction<string[]>) => {
       state.favoriteArticles = action.payload;
     },
+    setEmptyFavoriteArticles: (state) => {
+      state.favoriteArticles = [];
+    },
   },
 });
 export const {
@@ -41,4 +44,5 @@ export const {
   setSearchCategory,
   setFavoriteArticles,
   setLoadedFavoriteArticles,
+  setEmptyFavoriteArticles,
 } = articleSlice.actions;

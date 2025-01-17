@@ -9,9 +9,8 @@ export const AppRouter = () => {
     <>
       <Routes>
         <Route path="/*" element={<HomeRouter />}></Route>
-
         {status === "authenticated" ? (
-          <Route path="auth/*" element={<HomeRouter />}></Route>
+          <Route path="/*" element={<HomeRouter />}></Route>
         ) : (
           <Route path="auth/*" element={<AuthRouter />}></Route>
         )}

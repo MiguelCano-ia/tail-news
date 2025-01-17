@@ -10,10 +10,14 @@ const navigation = [
 export const ArticleLayout = () => {
   return (
     <>
-      <div className="flex justify-between flex-col min-h-screen">
-        <Navbar navigationRoutes={navigation} />
-        <Outlet />
-        <Footer />
+      <div className="flex flex-col min-h-screen justify-between">
+        <div>
+          <Navbar navigationRoutes={navigation} />
+          <Outlet />
+        </div>
+        <div>
+          <Footer />
+        </div>
       </div>
     </>
   );

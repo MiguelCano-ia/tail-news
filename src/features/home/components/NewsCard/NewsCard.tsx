@@ -1,8 +1,8 @@
 import { ImageWithFallback } from "@/shared/components/ImageWithFallBack";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { uploadFavoriteArticles } from "@/store/slices/thunks";
 import { Star } from "lucide-react";
-import { useState } from "react";
+import { uploadFavoriteArticles } from "@/store/slices/thunks";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { useCallback } from "react";
 import { useNavigate } from "react-router";
 
 interface NewsCardProps {
@@ -22,21 +22,16 @@ export const NewsCard = ({
   authors,
   dateTime,
 }: NewsCardProps) => {
-  const [favorite, setFavorite] = useState(false);
   const { status } = useAppSelector((state) => state.auth);
+  const { favoriteArticles } = useAppSelector((state) => state.articles);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleArticleClick = () => {
+  const handleArticleClick = useCallback(() => {
     navigate(`/article-details/${uri}`);
-  };
+  }, [uri, navigate]);
 
   const handleFavoriteArticles = () => {
-    if (favorite) {
-      setFavorite(false);
-    } else {
-      setFavorite(true);
-    }
     dispatch(uploadFavoriteArticles({ uri }));
   };
 
@@ -71,7 +66,9 @@ export const NewsCard = ({
         {status === "authenticated" && (
           <Star
             strokeWidth={0.75}
-            className={`cursor-pointer ${favorite ? "text-yellow-500" : ""}`}
+            className={`cursor-pointer ${
+              favoriteArticles.includes(uri) ? "text-yellow-500" : ""
+            }`}
             onClick={handleFavoriteArticles}
           />
         )}

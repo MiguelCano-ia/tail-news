@@ -11,16 +11,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { CardWrapper } from "./components";
+import { fileUpload } from "./helpers/fileUpload";
+import { Input } from "@/components/ui/input";
+import { useAppDispatch, useAppSelector } from "@/store";
 import { signUpSchema } from "./validations/signUp.schema";
 import { starSignUpWithEmailAndPassword } from "@/store/slices/auth/thuks";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { fileUpload } from "./helpers/fileUpload";
-
 export const SignUpPage = () => {
   const dispatch = useAppDispatch();
-  const { status } = useAppSelector((state) => state.auth);
+  const { status, errorMessage } = useAppSelector((state) => state.auth);
 
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
@@ -129,6 +128,9 @@ export const SignUpPage = () => {
               </FormItem>
             )}
           />
+          {errorMessage !== null && (
+            <div className="text-destructive">{errorMessage}</div>
+          )}
           <Button
             type="submit"
             className="w-full text-md"

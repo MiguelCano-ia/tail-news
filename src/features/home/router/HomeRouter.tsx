@@ -4,10 +4,13 @@ import {
   FavoriteArticlesPage,
   HomePage,
   SearchPage,
+  useCheckingAuth,
 } from "../../";
 import { Navigate, Route, Routes } from "react-router";
 
 export const HomeRouter = () => {
+  const { status } = useCheckingAuth();
+
   return (
     <>
       <Routes>
@@ -21,9 +24,11 @@ export const HomeRouter = () => {
 
         <Route path="search" element={<SearchPage />} />
 
-        <Route path="favorite-articles" element={<ArticleLayout />}>
-          <Route path="" element={<FavoriteArticlesPage />} />
-        </Route>
+        {status === "authenticated" && (
+          <Route path="favorite-articles" element={<ArticleLayout />}>
+            <Route path="" element={<FavoriteArticlesPage />} />
+          </Route>
+        )}
 
         <Route path="*" element={<Navigate to={"/"} />} />
       </Routes>

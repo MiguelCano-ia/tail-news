@@ -1,3 +1,4 @@
+import { CheckingArticles } from "@/shared/components/CheckingArticles";
 import {
   ArticleBody,
   ArticleHeader,
@@ -9,19 +10,22 @@ import { useParams } from "react-router";
 
 export const ArticlePage = () => {
   const { articleUri = "" } = useParams();
-  const {
-    data: article,
-    isLoading,
-    isFetching,
-  } = useGetArticleDetailsQuery({ articleUri });
+  const { data: article, isFetching } = useGetArticleDetailsQuery({
+    articleUri,
+  });
 
-  if (!article) return;
+  if (!article)
+    return (
+      <div className="flex flex-col justify-center items-center mt-40 mb-40">
+        <CheckingArticles />
+      </div>
+    );
   const { title, authors, body, image, dateTime, categories } = article;
   const keywords = title.split(" ").filter((word) => word.length > 4);
 
   return (
     <div className="container m-auto mt-14 mb-20 px-5">
-      {isFetching || isLoading ? (
+      {isFetching ? (
         <ArticleSkeleton />
       ) : (
         <>
@@ -40,6 +44,7 @@ export const ArticlePage = () => {
             />
             <div className="flex flex-col items-start gap-5">
               <RelatedArticles
+                uri={articleUri}
                 keyword={keywords.length > 2 ? keywords.slice(0, 2) : keywords}
               />
             </div>

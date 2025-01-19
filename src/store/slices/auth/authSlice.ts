@@ -26,8 +26,20 @@ export const authSlice = createSlice({
       state.email = null;
       state.photoURL = null;
       state.errorMessage = action.payload.errorMessage || null;
+      state.provider = "";
+    },
+    setProvider: (state, action: PayloadAction<string>) => {
+      state.provider = action.payload;
+    },
+    clearErrorMessage: (state) => {
+      state.errorMessage = null;
     },
   },
 });
-export const { setCheckingAuth, setSignInUser, setSignOutUser } =
-  authSlice.actions;
+export const {
+  setCheckingAuth,
+  setSignInUser,
+  setSignOutUser,
+  setProvider,
+  clearErrorMessage,
+} = authSlice.actions;

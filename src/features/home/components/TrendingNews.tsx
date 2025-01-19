@@ -1,12 +1,13 @@
-import { PaginationComponent } from "@/shared/components/PaginationComponent";
 import { NewsCard } from "./NewsCard/NewsCard";
+import { NewsCardSkeleton } from "./NewsCard";
+import { PaginationComponent } from "@/shared/components/PaginationComponent";
 import { useAppSelector, useGetArticlesByCategoryQuery } from "@/store";
 import { useState } from "react";
 
-export const TrendingNews = () => {
+const TrendingNews = () => {
   const [page, setPage] = useState(1);
   const { category } = useAppSelector((state) => state.articles);
-  const { data: articles } = useGetArticlesByCategoryQuery({
+  const { data: articles, isFetching } = useGetArticlesByCategoryQuery({
     page,
     sortBy: "socialScore",
     category: `dmoz/${category}`,
@@ -20,6 +21,16 @@ export const TrendingNews = () => {
     if (articles?.length === 0) return;
     setPage(page + 1);
   };
+
+  if (isFetching) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5 mb-64">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <NewsCardSkeleton key={index} />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <>
@@ -47,3 +58,5 @@ export const TrendingNews = () => {
     </>
   );
 };
+
+export default TrendingNews;

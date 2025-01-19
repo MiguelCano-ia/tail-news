@@ -1,6 +1,5 @@
 import { useGetArticlesByCategoryQuery } from "@/store";
 import {
-  TrendingNews,
   FeaturedNews,
   RecentNews,
   FeaturedNewsSkeleton,
@@ -8,13 +7,11 @@ import {
 } from "./";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { CheckingArticles } from "@/shared/components/CheckingArticles";
+import { lazy, Suspense } from "react";
+const TrendingNews = lazy(() => import("../components/TrendingNews"));
 
 export const News = ({ category }: { category: string }) => {
-  const {
-    data: articles,
-    isLoading,
-    isFetching,
-  } = useGetArticlesByCategoryQuery(
+  const { data: articles, isFetching } = useGetArticlesByCategoryQuery(
     category
       ? {
           sortBy: "date",
@@ -23,12 +20,17 @@ export const News = ({ category }: { category: string }) => {
       : skipToken
   );
 
-  if (!articles) return <CheckingArticles />;
+  if (!articles)
+    return (
+      <div className="col-span-2">
+        <CheckingArticles />
+      </div>
+    );
 
   return (
     <>
       <div className="flex flex-col gap-5 h-fit mt-2">
-        {isFetching || isLoading ? (
+        {isFetching ? (
           <FeaturedNewsSkeleton />
         ) : (
           <FeaturedNews mostRecentNews={articles[0]} />
@@ -36,7 +38,7 @@ export const News = ({ category }: { category: string }) => {
       </div>
 
       <div className="flex flex-col gap-5 h-fit">
-        {isFetching || isLoading ? (
+        {isFetching ? (
           <div className="flex flex-col gap-5 h-fit mt-2">
             {Array.from({ length: 5 }).map((_, index) => (
               <NewsCardSkeleton key={index} />
@@ -50,10 +52,12 @@ export const News = ({ category }: { category: string }) => {
         )}
       </div>
 
-      <div className="lg:col-span-2">
-        <div className="font-semibold text-2xl mb-5">Trending {category}</div>
-        <TrendingNews />
-      </div>
+      <Suspense fallback={<CheckingArticles />}>
+        <div className="lg:col-span-2">
+          <div className="font-semibold text-2xl mb-5">Trending {category}</div>
+          <TrendingNews />
+        </div>
+      </Suspense>
     </>
   );
 };

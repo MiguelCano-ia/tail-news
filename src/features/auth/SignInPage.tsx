@@ -21,7 +21,7 @@ import {
 
 export const SignInPage = () => {
   const dispatch = useAppDispatch();
-  const { status } = useAppSelector((state) => state.auth);
+  const { status, errorMessage } = useAppSelector((state) => state.auth);
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
@@ -84,6 +84,9 @@ export const SignInPage = () => {
               </FormItem>
             )}
           />
+          {errorMessage !== null && (
+            <div className="text-destructive">{errorMessage}</div>
+          )}
           <Button
             type="submit"
             className="w-full text-md"

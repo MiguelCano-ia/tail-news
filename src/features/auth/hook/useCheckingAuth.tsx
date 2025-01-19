@@ -1,5 +1,6 @@
 import { FirebaseAuth } from "@/firebase/config";
 import {
+  setProvider,
   setSignInUser,
   setSignOutUser,
   useAppDispatch,
@@ -17,9 +18,10 @@ export const useCheckingAuth = () => {
     onAuthStateChanged(FirebaseAuth, async (user) => {
       if (!user) return dispatch(setSignOutUser({ errorMessage: null }));
 
-      const { uid, displayName, email, photoURL } = user;
+      const { uid, displayName, email, photoURL, providerData } = user;
 
       dispatch(setSignInUser({ uid, displayName, email, photoURL }));
+      dispatch(setProvider(providerData[0].providerId.split(".")[0]));
       dispatch(loadFavoriteArticles());
     });
   }, []);

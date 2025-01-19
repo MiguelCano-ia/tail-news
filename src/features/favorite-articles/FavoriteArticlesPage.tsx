@@ -1,15 +1,11 @@
-import { useAppSelector, useGetFavoriteArticlesQuery } from "@/store";
 import { NewsCard, NewsCardSkeleton } from "../home/components";
 import { NoFavoriteArticles } from "./components/NoFavoriteArticles";
 import { skipToken } from "@reduxjs/toolkit/query";
+import { useAppSelector, useGetFavoriteArticlesQuery } from "@/store";
 
 export const FavoriteArticlesPage = () => {
   const { favoriteArticles } = useAppSelector((state) => state.articles);
-  const {
-    data: articles,
-    isLoading,
-    isFetching,
-  } = useGetFavoriteArticlesQuery(
+  const { data: articles, isFetching } = useGetFavoriteArticlesQuery(
     favoriteArticles.length > 0
       ? {
           articleUri: favoriteArticles,
@@ -17,7 +13,7 @@ export const FavoriteArticlesPage = () => {
       : skipToken
   );
 
-  if (isLoading || isFetching) {
+  if (isFetching) {
     return (
       <div className="container m-auto grid grid-cols-1 gap-5 md:grid-cols-2 px-10 lg:px-20 mb-10  mt-10 md:mt-20">
         {Array.from({ length: 6 }).map((_, index) => (

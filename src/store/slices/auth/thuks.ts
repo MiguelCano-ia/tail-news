@@ -3,9 +3,15 @@ import {
   signInWithPasswordAndEmail,
   signOutFirebase,
   signUpWithEmailAndPassword,
+  updateUserProfile,
 } from "@/firebase/provider";
 import { AppDispatch } from "@/store/store";
-import { setCheckingAuth, setSignInUser, setSignOutUser } from "./authSlice";
+import {
+  setCheckingAuth,
+  setProvider,
+  setSignInUser,
+  setSignOutUser,
+} from "./authSlice";
 import { setEmptyFavoriteArticles } from "../articleSlice";
 
 export const startSignInWithGoogle = () => {
@@ -14,14 +20,16 @@ export const startSignInWithGoogle = () => {
 
     const result = await signInWithGoogle();
 
-    if (!result.ok)
-      dispatch(
+    if (!result.ok) {
+      return dispatch(
         setSignOutUser({
           errorMessage: result.errorMessage || "Failed to sign in with google",
         })
       );
+    }
 
-    dispatch(setSignInUser(result));
+    dispatch(setSignInUser({ ...result }));
+    dispatch(setProvider("google"));
   };
 };
 
@@ -46,14 +54,14 @@ export const starSignUpWithEmailAndPassword = ({
       photoURL,
     });
 
-    if (!result.ok)
-      dispatch(
+    if (!result.ok) {
+      return dispatch(
         setSignOutUser({
           errorMessage: result.errorMessage || "Failed to sign up",
         })
       );
+    }
 
-    console.log(result);
     dispatch(setSignInUser(result));
   };
 };
@@ -70,14 +78,37 @@ export const startSignInWIthEmailAndPassword = ({
 
     const result = await signInWithPasswordAndEmail({ email, password });
 
-    if (!result.ok)
-      dispatch(
+    if (!result.ok) {
+      return dispatch(
         setSignOutUser({
           errorMessage: result.errorMessage || "Failed to sign in",
         })
       );
+    }
 
     dispatch(setSignInUser(result));
+  };
+};
+
+export const startUpdateProfile = ({
+  displayName,
+  photoURL,
+}: {
+  displayName: string;
+  photoURL: string;
+}) => {
+  return async (dispatch: AppDispatch) => {
+    const result = await updateUserProfile(displayName, photoURL);
+
+    if (result && !result.ok) {
+      return dispatch(
+        setSignOutUser({
+          errorMessage: result.errorMessage || "Failed to update profile",
+        })
+      );
+    }
+
+    dispatch(setSignInUser({ ...result }));
   };
 };
 

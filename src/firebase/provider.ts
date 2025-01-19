@@ -1,5 +1,6 @@
 import {
   createUserWithEmailAndPassword,
+  getAuth,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -40,7 +41,8 @@ export const signUpWithEmailAndPassword = async ({
 
     return { ok: true, uid, displayName, email, photoURL };
   } catch (error) {
-    return { ok: false, errorMessage: (error as Error).message };
+    console.log(error);
+    return { ok: false, errorMessage: "Email already exists" };
   }
 };
 
@@ -57,7 +59,26 @@ export const signInWithPasswordAndEmail = async ({
     } = await signInWithEmailAndPassword(FirebaseAuth, email, password);
     return { ok: true, uid, displayName, email, photoURL };
   } catch (error) {
-    return { ok: false, errorMessage: (error as Error).message };
+    console.log(error);
+    return { ok: false, errorMessage: "Invalid email or password" };
+  }
+};
+
+export const updateUserProfile = async (
+  displayName: string,
+  photoURL: string
+) => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  if (user) {
+    try {
+      const { uid, email } = user;
+      await updateProfile(user, { displayName, photoURL });
+      return { ok: true, uid, email, displayName, photoURL };
+    } catch (error) {
+      return { ok: false, errorMessage: (error as Error).message };
+    }
   }
 };
 

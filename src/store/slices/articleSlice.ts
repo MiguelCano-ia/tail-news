@@ -4,12 +4,14 @@ interface ArticleInitialState {
   category: string;
   searchCategory: string;
   favoriteArticles: string[];
+  isOpen: boolean;
 }
 
 const initialState: ArticleInitialState = {
   category: "",
   searchCategory: "dmoz/Home",
   favoriteArticles: [],
+  isOpen: false,
 };
 
 export const articleSlice = createSlice({
@@ -37,6 +39,9 @@ export const articleSlice = createSlice({
     setEmptyFavoriteArticles: (state) => {
       state.favoriteArticles = [];
     },
+    setEditProfile: (state, action: PayloadAction<boolean>) => {
+      state.isOpen = action.payload;
+    },
   },
 });
 export const {
@@ -45,4 +50,5 @@ export const {
   setFavoriteArticles,
   setLoadedFavoriteArticles,
   setEmptyFavoriteArticles,
+  setEditProfile,
 } = articleSlice.actions;

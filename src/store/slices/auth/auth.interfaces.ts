@@ -10,6 +10,7 @@ export type Status = "no-authenticated" | "checking" | "authenticated";
 export interface AuthState extends User {
   status: Status;
   errorMessage?: string | null;
+  provider: string;
 }
 
 export const initialState: AuthState = {
@@ -19,4 +20,5 @@ export const initialState: AuthState = {
   email: null,
   photoURL: null,
   errorMessage: null,
+  provider: "",
 };

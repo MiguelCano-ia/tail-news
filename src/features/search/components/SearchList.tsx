@@ -8,11 +8,7 @@ export const SearchList = ({ search }: { search: string | string[] }) => {
   const { searchCategory } = useAppSelector((state) => state.articles);
   const [page, setPage] = useState(1);
 
-  const {
-    data: articles,
-    isLoading,
-    isFetching,
-  } = useGetArticlesByCategoryQuery({
+  const { data: articles, isFetching } = useGetArticlesByCategoryQuery({
     page,
     keyword: search,
     category: searchCategory,
@@ -41,11 +37,12 @@ export const SearchList = ({ search }: { search: string | string[] }) => {
     if (articles?.length === 0) return;
     setPage(page + 1);
   };
+
   return (
     <>
       <div className="font-bold text-3xl">{title} News</div>
       <div className="px-5 sm:px-20 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        {isLoading || isFetching
+        {isFetching
           ? Array.from({ length: 9 }).map((_, index) => (
               <NewsCardSkeleton key={index} />
             ))
@@ -60,7 +57,7 @@ export const SearchList = ({ search }: { search: string | string[] }) => {
               />
             ))}
         <div className="col-span-full flex justify-center mt-5">
-          {!isLoading && !isFetching && (
+          {!isFetching && articles?.length === 9 && (
             <PaginationComponent
               page={page}
               pageCount={9}

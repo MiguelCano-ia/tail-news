@@ -3,7 +3,7 @@ import { NoFavoriteArticles } from "./components/NoFavoriteArticles";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useAppSelector, useGetFavoriteArticlesQuery } from "@/store";
 
-export const FavoriteArticlesPage = () => {
+const FavoriteArticlesPage = () => {
   const { favoriteArticles } = useAppSelector((state) => state.articles);
   const { data: articles, isFetching } = useGetFavoriteArticlesQuery(
     favoriteArticles.length > 0
@@ -31,7 +31,7 @@ export const FavoriteArticlesPage = () => {
         <div className="text-3xl font-bold mb-10 text-center mt-10">
           My Favorite Articles
         </div>
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 px-10 lg:px-20 mb-10">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 px-10 lg:px-20 mb-20">
           {articles.map(({ uri, title, image, dateTime, authors }) => (
             <NewsCard
               key={uri}
@@ -47,3 +47,5 @@ export const FavoriteArticlesPage = () => {
     </>
   );
 };
+
+export default FavoriteArticlesPage;

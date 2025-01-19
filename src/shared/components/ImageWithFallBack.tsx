@@ -1,3 +1,5 @@
+import { LazyLoadImage } from "react-lazy-load-image-component";
+
 interface ImageWithFallbackProps {
   src: string | null;
   fallbackSrc: string;
@@ -18,7 +20,7 @@ export const ImageWithFallback = ({
   };
 
   return (
-    <img
+    <LazyLoadImage
       src={src || fallbackSrc}
       onError={handleError}
       alt={alt}

@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { signUpSchema } from "./validations/signUp.schema";
 import { starSignUpWithEmailAndPassword } from "@/store/slices/auth/thuks";
-export const SignUpPage = () => {
+const SignUpPage = () => {
   const dispatch = useAppDispatch();
   const { status, errorMessage } = useAppSelector((state) => state.auth);
 
@@ -143,3 +143,5 @@ export const SignUpPage = () => {
     </CardWrapper>
   );
 };
+
+export default SignUpPage;

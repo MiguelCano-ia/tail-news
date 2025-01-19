@@ -19,7 +19,7 @@ import {
   startSignInWithGoogle,
 } from "@/store/slices/auth/thuks";
 
-export const SignInPage = () => {
+const SignInPage = () => {
   const dispatch = useAppDispatch();
   const { status, errorMessage } = useAppSelector((state) => state.auth);
 
@@ -109,3 +109,5 @@ export const SignInPage = () => {
     </CardWrapper>
   );
 };
+
+export default SignInPage;

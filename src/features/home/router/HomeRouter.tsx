@@ -1,12 +1,14 @@
 import { ArticleLayout } from "@/layout/ArticleLayout";
-import {
-  ArticlePage,
-  FavoriteArticlesPage,
-  HomePage,
-  SearchPage,
-  useCheckingAuth,
-} from "../../";
+import { HomePage, SearchPage, useCheckingAuth } from "../../";
 import { Navigate, Route, Routes } from "react-router";
+import { lazy } from "react";
+
+const ArticlePage = lazy(
+  () => import("@/features/article-details/ArticlePage")
+);
+const FavoriteArticlesPage = lazy(
+  () => import("@/features/favorite-articles/FavoriteArticlesPage")
+);
 
 export const HomeRouter = () => {
   const { status } = useCheckingAuth();

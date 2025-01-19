@@ -1,4 +1,3 @@
-import { CheckingArticles } from "@/shared/components/CheckingArticles";
 import {
   ArticleBody,
   ArticleHeader,
@@ -7,19 +6,22 @@ import {
 } from "./components";
 import { useGetArticleDetailsQuery } from "@/store";
 import { useParams } from "react-router";
+import { Loading } from "@/shared/components/Loading";
 
-export const ArticlePage = () => {
+const ArticlePage = () => {
   const { articleUri = "" } = useParams();
   const { data: article, isFetching } = useGetArticleDetailsQuery({
     articleUri,
   });
 
-  if (!article)
+  if (!article) {
     return (
       <div className="flex flex-col justify-center items-center mt-40 mb-40">
-        <CheckingArticles />
+        <Loading />
       </div>
     );
+  }
+
   const { title, authors, body, image, dateTime, categories } = article;
   const keywords = title.split(" ").filter((word) => word.length > 4);
 
@@ -54,3 +56,5 @@ export const ArticlePage = () => {
     </div>
   );
 };
+
+export default ArticlePage;

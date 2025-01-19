@@ -1,9 +1,9 @@
 import { AuthRouter, HomeRouter } from "@/features";
+import { clearErrorMessage, useAppDispatch } from "@/store";
+import { Loading } from "@/shared/components/Loading";
 import { Route, Routes, useLocation } from "react-router";
 import { useCheckingAuth } from "@/features/auth/hook/useCheckingAuth";
-import { CheckingArticles } from "@/shared/components/CheckingArticles";
 import { useEffect } from "react";
-import { clearErrorMessage, useAppDispatch } from "@/store";
 
 export const AppRouter = () => {
   const { status } = useCheckingAuth();
@@ -17,7 +17,7 @@ export const AppRouter = () => {
   if (status === "checking")
     return (
       <div className="flex h-screen">
-        <CheckingArticles />
+        <Loading />
       </div>
     );
 

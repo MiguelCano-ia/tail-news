@@ -23,8 +23,6 @@ export function SelectCategory() {
   const { searchCategory } = useAppSelector((state) => state.articles);
   const [open, setOpen] = useState(false);
 
-  console.log(searchCategory);
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

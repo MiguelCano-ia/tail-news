@@ -2,7 +2,6 @@ import { ImageWithFallback } from "@/shared/components/ImageWithFallBack";
 import { Star } from "lucide-react";
 import { uploadFavoriteArticles } from "@/store/slices/thunks";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { useCallback } from "react";
 import { useNavigate } from "react-router";
 
 interface NewsCardProps {
@@ -27,10 +26,6 @@ export const NewsCard = ({
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleArticleClick = useCallback(() => {
-    navigate(`/article-details/${uri}`);
-  }, [uri, navigate]);
-
   const handleFavoriteArticles = () => {
     dispatch(uploadFavoriteArticles({ uri }));
   };
@@ -42,7 +37,7 @@ export const NewsCard = ({
         fallbackSrc={"/imgs/no-image-avaible.jpg"}
         alt="no-avaible"
         className="w-36 h-32 object-cover flex-shrink-0 cursor-pointer"
-        handleArticleClick={handleArticleClick}
+        handleArticleClick={() => navigate(`/article-details/${uri}`)}
       />
       <div className="flex flex-col gap-2">
         <div className="font-medium text-sm line-clamp-3">{title}</div>

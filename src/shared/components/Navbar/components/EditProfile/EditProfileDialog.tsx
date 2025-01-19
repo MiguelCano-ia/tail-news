@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import { setEditProfile, useAppDispatch } from "@/store";
+import { setEditProfile, useAppDispatch, useAppSelector } from "@/store";
 import { startUpdateProfile } from "@/store/slices/auth/thuks";
 import { editProfileSchema } from "./";
 
@@ -36,10 +36,11 @@ export const EditProfileDialog = ({
   onOpenChange,
 }: EditProfileDialogProps) => {
   const dispatch = useAppDispatch();
+  const { displayName } = useAppSelector((state) => state.auth);
   const form = useForm<FormFields>({
     resolver: zodResolver(editProfileSchema),
     defaultValues: {
-      username: "",
+      username: displayName!,
       profilePicture: new DataTransfer().files,
     },
   });

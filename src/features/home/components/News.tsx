@@ -5,9 +5,9 @@ import {
   FeaturedNewsSkeleton,
   NewsCardSkeleton,
 } from "./";
-import { skipToken } from "@reduxjs/toolkit/query";
-import { CheckingArticles } from "@/shared/components/CheckingArticles";
 import { lazy, Suspense } from "react";
+import { Loading } from "@/shared/components/Loading";
+import { skipToken } from "@reduxjs/toolkit/query";
 const TrendingNews = lazy(() => import("../components/TrendingNews"));
 
 export const News = ({ category }: { category: string }) => {
@@ -22,8 +22,8 @@ export const News = ({ category }: { category: string }) => {
 
   if (!articles)
     return (
-      <div className="col-span-2">
-        <CheckingArticles />
+      <div className="col-span-2 mb-14">
+        <Loading />
       </div>
     );
 
@@ -52,7 +52,7 @@ export const News = ({ category }: { category: string }) => {
         )}
       </div>
 
-      <Suspense fallback={<CheckingArticles />}>
+      <Suspense fallback={<Loading />}>
         <div className="lg:col-span-2">
           <div className="font-semibold text-2xl mb-5">Trending {category}</div>
           <TrendingNews />

@@ -112,8 +112,7 @@ const SignUpPage = () => {
           <FormField
             control={form.control}
             name="profilePicture"
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel>Avatar (optional)</FormLabel>
                 <FormControl>

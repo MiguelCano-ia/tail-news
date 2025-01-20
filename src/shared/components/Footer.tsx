@@ -5,7 +5,7 @@ export const Footer = () => {
     <div className="flex flex-col">
       <footer className="bg-gray-200 dark:bg-gray-900 dark:text-white py-4">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div>
               <h3 className="text-lg font-bold mb-4">About Us</h3>
               <p>Your news portal for the latest updates and stories.</p>
